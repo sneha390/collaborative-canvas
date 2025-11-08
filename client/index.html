@@ -3,13 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Collaborative Canvas</title>
 </head>
 <body>
+    <header class="header">
+        <h1 class="title">
+            <span class="icon">✨</span>
+            Collaborative Canvas
+        </h1>
+        <div class="online-users">
+            <span class="status-dot"></span>
+            <span>3 users online</span>
+        </div>
+    </header>
 
-    <canvas id="canvas"></canvas>
-    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Toolbar -->
+        <aside class="toolbar">
+            <div class="toolbar-section">
+                <h3 class="section-title">Tools</h3>
+                <div class="tool-group">
+                    <button class="tool-btn active" data-tool="brush">🖌️ Brush</button>
+                    <button class="tool-btn" data-tool="eraser">🧹 Eraser</button>
+                </div>
+            </div>
 
-    <script type="module" src="script.js"></script>
+            <!-- Color Picker -->
+            <div class="toolbar-section">
+                <h3 class="section-title">Color</h3>
+                <div class="color-picker-container">
+                    <input type="color" id="colorPicker" class="color-input" value="#6366f1">
+                    <div class="color-presets">
+                        <button class="color-preset" data-color="#000000" style="background-color: #000000"></button>
+                        <button class="color-preset" data-color="#ef4444" style="background-color: #ef4444"></button>
+                        <button class="color-preset" data-color="#f59e0b" style="background-color: #f59e0b"></button>
+                        <button class="color-preset" data-color="#10b981" style="background-color: #10b981"></button>
+                        <button class="color-preset" data-color="#3b82f6" style="background-color: #3b82f6"></button>
+                        <button class="color-preset" data-color="#6366f1" style="background-color: #6366f1"></button>
+                        <button class="color-preset" data-color="#8b5cf6" style="background-color: #8b5cf6"></button>
+                        <button class="color-preset" data-color="#ec4899" style="background-color: #ec4899"></button>
+                    </div>
+                    <div class="current-color">
+                        <div class="color-display" id="currentColor" style="background-color: #6366f1"></div>
+                        <span class="color-label">#6366f1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stroke Width -->
+            <div class="toolbar-section">
+                <h3 class="section-title">Stroke Width</h3>
+                <div class="slider-container">
+                    <input type="range" id="strokeWidth" class="slider" min="1" max="50" value="5">
+                    <div class="slider-value">
+                        <span id="strokeValue">5</span>
+                        <span class="unit">px</span>
+                    </div>
+                    <div class="stroke-preview">
+                        <div id="strokePreview" class="preview-line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar-section">
+                <h3 class="section-title">Actions</h3>
+                <button class="action-btn clear-btn">🗑️ Clear Canvas</button>
+            </div>
+        </aside>
+
+        <!-- Canvas Area -->
+        <main class="canvas-container">
+            <canvas id="canvas"></canvas>
+            
+            <div class="active-users">
+                <div class="user-indicator" style="background-color: #ef4444;">
+                    Alice 🖱️
+                </div>
+                <div class="user-indicator" style="background-color: #10b981;">
+                    Bob 🖱️
+                </div>
+                <div class="user-indicator" style="background-color: #3b82f6;">
+                    Charlie 🖱️
+                </div>
+            </div>
+
+            <div class="canvas-info">
+                <div class="info-item">⚡ Real-time sync enabled</div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="scripts/canvas.js"></script>
 </body>
 </html>
