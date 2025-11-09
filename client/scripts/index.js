@@ -1,6 +1,6 @@
-import './tools_controller.js';
-import canvasController from './canvas_controller.js';
-import { initialize as initializeSyncController } from './sync_controller.js';
+import './controller/tools_controller.js';
+import canvasController from './controller/canvas_controller.js';
+import { initialize as initializeSyncController } from './controller/sync_controller.js';
 
 // ********************************* DOM ELEMENTS *********************************
 const ROOM_INFO_DISPLAY = document.getElementById('roomInfo');

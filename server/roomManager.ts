@@ -8,7 +8,9 @@ export const getOrCreateRoom = (roomId: string): CanvasRoom => {
       id: roomId,
       actions: [],
       users: new Map(),
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      actionHistory: [],
+      currentHistoryIndex: -1
     });
     console.log(`Created new room: ${roomId}`);
   }
@@ -28,7 +30,9 @@ export const addUserToRoom = (
     name: userName,
     color: userColor,
     ws: ws,
-    roomId: roomId
+    roomId: roomId,
+    isActive: true,
+    lastCursorUpdate: Date.now()
   };
   
   room.users.set(userId, userConnection);

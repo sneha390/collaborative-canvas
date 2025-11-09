@@ -232,19 +232,41 @@ body {
 }
 
 /* Action Buttons */
+.action-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
 .action-btn {
     width: 100%;
     padding: 10px;
     background: white;
-    border: 1px solid #ef4444;
+    border: 1px solid #3b82f6;
     border-radius: 6px;
-    color: #ef4444;
+    color: #3b82f6;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
 .action-btn:hover {
+    background: #eff6ff;
+    transform: translateY(-1px);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+#clear-canvas-button {
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+#clear-canvas-button:hover {
     background: #fef2f2;
 }
 
@@ -281,6 +303,48 @@ body {
     font-size: 13px;
     font-weight: 500;
     color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Remote Cursor Indicators */
+.remote-cursor {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1000;
+    transition: left 0.1s ease-out, top 0.1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.remote-cursor > div:first-child {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes proximity-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    50% {
+        transform: scale(1.5);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
 }
 
 /* Canvas Info */

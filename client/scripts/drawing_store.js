@@ -26,12 +26,12 @@ const startStroke = (userId, userName, color, strokeWidth, isEraser) => {
             isEraser: isEraser
         }
     };
-    console.log('📝 Started new stroke:', currentStroke.id);
+    console.log('Started new stroke:', currentStroke.id);
 };
 
 const addPointToStroke = (x, y) => {
     if (!currentStroke) {
-        console.warn('⚠️ No active stroke to add point to');
+        console.warn('No active stroke to add point to');
         return;
     }
     currentStroke.data.points.push({ x, y });
@@ -39,13 +39,13 @@ const addPointToStroke = (x, y) => {
 
 const endStroke = () => {
     if (!currentStroke) {
-        console.warn('⚠️ No active stroke to end');
+        console.warn('No active stroke to end');
         return null;
     }
     
     // Only save strokes with at least 1 point
     if (currentStroke.data.points.length === 0) {
-        console.warn('⚠️ Stroke has no points, discarding');
+        console.warn('Stroke has no points, discarding');
         currentStroke = null;
         return null;
     }
@@ -54,14 +54,14 @@ const endStroke = () => {
     actions.push(completedStroke);
     version++;
     
-    console.log(`✅ Completed stroke ${completedStroke.id} with ${completedStroke.data.points.length} points`);
+    console.log(`Completed stroke ${completedStroke.id} with ${completedStroke.data.points.length} points`);
     
     currentStroke = null;
     return completedStroke;
 };
 
 const cancelStroke = () => {
-    console.log('❌ Cancelled stroke');
+    console.log('Cancelled stroke');
     currentStroke = null;
 };
 
@@ -70,21 +70,43 @@ const addAction = (action) => {
     // Check for duplicate actions (prevent double-drawing)
     const isDuplicate = actions.some(a => a.id === action.id);
     if (isDuplicate) {
-        console.warn('⚠️ Duplicate action detected, skipping:', action.id);
+        console.warn('Duplicate action detected, skipping:', action.id);
         return false;
     }
     
+    // Conflict resolution: Insert action in timestamp order
+    // This ensures consistent ordering across all clients
+    let insertIndex = actions.length;
+    for (let i = actions.length - 1; i >= 0; i--) {
+        if (actions[i].timestamp <= action.timestamp) {
+            insertIndex = i + 1;
+            break;
+        }
+    }
+    
+    // If we're inserting in the middle, we have a conflict that needs resolution
+    if (insertIndex < actions.length) {
+        console.log(`Conflict detected: inserting action at index ${insertIndex} (out of ${actions.length})`);
+        actions.splice(insertIndex, 0, action);
+        
+        // Mark that we need to redraw everything from this point
+        version++;
+        console.log(`Added action ${action.id} with conflict resolution at index ${insertIndex}`);
+        return { added: true, needsRedraw: true, fromIndex: insertIndex };
+    }
+    
+    // Normal case: append to end
     actions.push(action);
     version++;
-    console.log(`📌 Added action ${action.id} (type: ${action.type}). Total actions: ${actions.length}`);
-    return true;
+    console.log(`Added action ${action.id} (type: ${action.type}). Total actions: ${actions.length}`);
+    return { added: true, needsRedraw: false };
 };
 
 const clearActions = () => {
     const count = actions.length;
     actions = [];
     version++;
-    console.log(`🗑️  Cleared ${count} actions`);
+    console.log(`Cleared ${count} actions`);
 };
 
 const getActions = () => {
@@ -103,7 +125,7 @@ const getCurrentStroke = () => {
 const replayActions = (ctx, actionsToReplay = null) => {
     const replayList = actionsToReplay || actions;
     
-    console.log(`🎬 Replaying ${replayList.length} actions...`);
+    console.log(`Replaying ${replayList.length} actions...`);
     
     replayList.forEach((action) => {
         if (action.type === 'clear') {
@@ -113,7 +135,7 @@ const replayActions = (ctx, actionsToReplay = null) => {
         }
     });
     
-    console.log('✅ Replay complete');
+    console.log('Replay complete');
 };
 
 const replayStroke = (ctx, strokeData) => {
@@ -162,4 +184,3 @@ export {
     replayActions,
     replayStroke
 };
-

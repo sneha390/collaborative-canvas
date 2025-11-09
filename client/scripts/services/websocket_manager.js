@@ -163,6 +163,55 @@ const sendClearCanvas = () => {
     });
 };
 
+const sendStrokeStart = (strokeId, points, color, strokeWidth, isEraser) => {
+    return send({
+        type: 'STROKE_START',
+        payload: { strokeId, points, color, strokeWidth, isEraser }
+    });
+};
+
+const sendStrokeUpdate = (strokeId, points) => {
+    return send({
+        type: 'STROKE_UPDATE',
+        payload: { strokeId, points }
+    });
+};
+
+const sendStrokeEnd = (strokeId, strokeData) => {
+    return send({
+        type: 'STROKE_END',
+        payload: { strokeId, strokeData }
+    });
+};
+
+const sendCursorMove = (x, y) => {
+    return send({
+        type: 'CURSOR_MOVE',
+        payload: { x, y }
+    });
+};
+
+const sendUndo = () => {
+    return send({
+        type: 'UNDO',
+        payload: { timestamp: Date.now() }
+    });
+};
+
+const sendRedo = () => {
+    return send({
+        type: 'REDO',
+        payload: { timestamp: Date.now() }
+    });
+};
+
+const sendUserPresence = (status) => {
+    return send({
+        type: 'USER_PRESENCE',
+        payload: { status, timestamp: Date.now() }
+    });
+};
+
 // ********************************* CONNECTION STATUS *********************************
 const getConnectionStatus = () => {
     if (!ws) return 'disconnected';
@@ -196,6 +245,13 @@ export {
     sendJoinRoom,
     sendDrawAction,
     sendClearCanvas,
+    sendStrokeStart,
+    sendStrokeUpdate,
+    sendStrokeEnd,
+    sendCursorMove,
+    sendUndo,
+    sendRedo,
+    sendUserPresence,
     getConnectionStatus,
     isWebSocketConnected
 };

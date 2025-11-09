@@ -16,6 +16,8 @@ const ERASER_TOOL_BUTTON = document.getElementById('eraser-tool');
 const COLOR_PICKER_INPUT = document.getElementById('colorPicker');
 const STROKE_WIDTH_SLIDER = document.getElementById('strokeWidth');
 const CLEAR_CANVAS_BUTTON = document.getElementById('clear-canvas-button');
+const UNDO_BUTTON = document.getElementById('undo-button');
+const REDO_BUTTON = document.getElementById('redo-button');
 const CURRENT_COLOR_DISPLAY = document.getElementById('currentColor');
 const CURRENT_COLOR_LABEL = document.querySelector('.color-label');
 const STROKE_VALUE_DISPLAY = document.getElementById('strokeValue');
@@ -31,15 +33,19 @@ let currentStrokeWidth = 5;
 
 // ********************************* IMPORTS *********************************
 let broadcastClearCanvas = null;
+let broadcastUndo = null;
+let broadcastRedo = null;
 let clearDrawingStoreActions = null;
 
 // Dynamically import modules to avoid circular dependencies
 setTimeout(() => {
     import('./sync_controller.js').then(module => {
         broadcastClearCanvas = module.broadcastClearCanvas;
+        broadcastUndo = module.broadcastUndo;
+        broadcastRedo = module.broadcastRedo;
         console.log('✅ Sync controller imported in tools_controller');
     });
-    import('./drawing_store.js').then(module => {
+    import('../drawing_store.js').then(module => {
         clearDrawingStoreActions = module.clearActions;
         console.log('✅ Drawing store imported in tools_controller');
     });
@@ -145,6 +151,38 @@ const clearCanvas = () => {
 };
 
 CLEAR_CANVAS_BUTTON.addEventListener('click', clearCanvas);
+
+// ********************************* UNDO/REDO FUNCTIONALITY *********************************
+const performUndo = () => {
+    if (broadcastUndo) {
+        broadcastUndo();
+        console.log('🔙 Undo requested');
+    }
+};
+
+const performRedo = () => {
+    if (broadcastRedo) {
+        broadcastRedo();
+        console.log('🔜 Redo requested');
+    }
+};
+
+UNDO_BUTTON.addEventListener('click', performUndo);
+REDO_BUTTON.addEventListener('click', performRedo);
+
+// Keyboard shortcuts for undo/redo
+document.addEventListener('keydown', (e) => {
+    // Ctrl+Z or Cmd+Z for undo
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        performUndo();
+    }
+    // Ctrl+Y or Ctrl+Shift+Z or Cmd+Shift+Z for redo
+    else if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.shiftKey && e.key === 'z'))) {
+        e.preventDefault();
+        performRedo();
+    }
+});
 
 // ********************************* BRUSH TOOL FUNCTIONALITY *********************************
 const activateBrushTool = () => {

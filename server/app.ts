@@ -4,7 +4,18 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { WSMessage } from './types';
 import { userConnections } from './storage';
 import { removeUserFromRoom, broadcastToRoom } from './roomManager';
-import { handleJoinRoom, handleDrawAction, handleClearCanvas } from './websocketHandlers';
+import { 
+  handleJoinRoom, 
+  handleDrawAction, 
+  handleClearCanvas, 
+  handleStrokeStart, 
+  handleStrokeUpdate, 
+  handleStrokeEnd,
+  handleCursorMove,
+  handleUndo,
+  handleRedo,
+  handleUserPresence
+} from './websocketHandlers';
 import routes from './routes';
 
 const app = express();
@@ -29,6 +40,27 @@ wss.on('connection', (ws: WebSocket) => {
           break;
         case 'CLEAR_CANVAS':
           handleClearCanvas(ws, wsMessage.payload);
+          break;
+        case 'STROKE_START':
+          handleStrokeStart(ws, wsMessage.payload);
+          break;
+        case 'STROKE_UPDATE':
+          handleStrokeUpdate(ws, wsMessage.payload);
+          break;
+        case 'STROKE_END':
+          handleStrokeEnd(ws, wsMessage.payload);
+          break;
+        case 'CURSOR_MOVE':
+          handleCursorMove(ws, wsMessage.payload);
+          break;
+        case 'UNDO':
+          handleUndo(ws, wsMessage.payload);
+          break;
+        case 'REDO':
+          handleRedo(ws, wsMessage.payload);
+          break;
+        case 'USER_PRESENCE':
+          handleUserPresence(ws, wsMessage.payload);
           break;
         default:
           console.log('Unknown message type:', wsMessage.type);
