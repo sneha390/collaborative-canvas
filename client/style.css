@@ -299,6 +299,165 @@ body {
     color: #166534;
 }
 
+/* Landing Page Styles */
+.landing-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 61px);
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.welcome-card {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.welcome-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.join-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.form-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.input-with-button {
+    display: flex;
+    gap: 8px;
+}
+
+.input-with-button .form-input {
+    flex: 1;
+}
+
+.generate-btn {
+    padding: 12px 16px;
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.generate-btn:hover {
+    background: #e5e7eb;
+    transform: scale(1.05);
+}
+
+.form-hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: -4px;
+}
+
+.join-btn {
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    margin-top: 8px;
+}
+
+.join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.join-icon {
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.join-btn:hover .join-icon {
+    transform: translateX(4px);
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.feature-icon {
+    font-size: 24px;
+}
+
+.feature-text {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
@@ -316,5 +475,23 @@ body {
     .active-users {
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    .welcome-card {
+        padding: 30px 24px;
+    }
+
+    .welcome-title {
+        font-size: 28px;
+    }
+
+    .features {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .feature-item {
+        flex-direction: row;
+        justify-content: center;
     }
 }

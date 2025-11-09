@@ -27,7 +27,25 @@ const REAL_TIME_SYNC_STATUS = document.getElementById('real-time-sync-status');
 const ACTIVE_USERS_CONTAINER = document.getElementById('active-users-container');
 
 // STATE VARIABLES
-let currentStrokeWidth = 5; 
+let currentStrokeWidth = 5;
+
+// ********************************* EVENT DISPATCHER *********************************
+// Dispatch custom event when controller state changes
+const dispatchControllerChanged = (changeType, value) => {
+    const event = new CustomEvent('controller_changed', {
+        detail: {
+            type: changeType,
+            value: value,
+            state: {
+                color: COLOR_PICKER_INPUT.value,
+                strokeWidth: currentStrokeWidth,
+                tool: BRUSH_TOOL_BUTTON.classList.contains('active') ? 'brush' : 'eraser'
+            }
+        }
+    });
+    window.dispatchEvent(event);
+    console.log('Controller changed:', changeType, value);
+} 
 
 
 // ********************************* STROKE WIDTH FUNCTIONALITY *********************************
@@ -36,6 +54,7 @@ const updateStrokeWidth = value => {
     currentStrokeWidth = value;
     STROKE_VALUE_DISPLAY.textContent = value;
     STROKE_PREVIEW.style.height = `${value}px`;
+    dispatchControllerChanged('strokeWidth', value);
 }
 // Initialize stroke width on page load
 updateStrokeWidth(STROKE_WIDTH_SLIDER.value);
@@ -50,6 +69,7 @@ const updateColorPicker = color => {
     COLOR_PICKER_INPUT.value = color;
     CURRENT_COLOR_DISPLAY.style.backgroundColor = color;
     CURRENT_COLOR_LABEL.textContent = color;
+    dispatchControllerChanged('color', color);
 }
 
 // Event listener for color picker input
@@ -101,6 +121,7 @@ CLEAR_CANVAS_BUTTON.addEventListener('click', clearCanvas);
 const activateBrushTool = () => {
     BRUSH_TOOL_BUTTON.classList.add('active');
     ERASER_TOOL_BUTTON.classList.remove('active');
+    dispatchControllerChanged('tool', 'brush');
 }
 
 // Event listener for brush tool button
@@ -110,7 +131,16 @@ BRUSH_TOOL_BUTTON.addEventListener('click', activateBrushTool);
 const activateEraserTool = () => {
     ERASER_TOOL_BUTTON.classList.add('active');
     BRUSH_TOOL_BUTTON.classList.remove('active');
+    dispatchControllerChanged('tool', 'eraser');
 }
 
 // Event listener for eraser tool button
-ERASER_TOOL_BUTTON.addEventListener('click', activateEraserTool);   
+ERASER_TOOL_BUTTON.addEventListener('click', activateEraserTool);
+
+// ********************************* EXPORTS FOR CANVAS CONTROLLER *********************************
+export const getCurrentColor = () => COLOR_PICKER_INPUT.value;
+export const getCurrentStrokeWidth = () => currentStrokeWidth;
+export const isEraserActive = () => ERASER_TOOL_BUTTON.classList.contains('active');
+export const isBrushActive = () => BRUSH_TOOL_BUTTON.classList.contains('active');
+export const getCanvas = () => CANVAS;
+export const getCanvasContext = () => CANVAS.getContext('2d');
