@@ -25,16 +25,17 @@ The client WebSocket connection settings can be configured in `client/scripts/co
 ```javascript
 const config = {
     websocket: {
-        host: window.location.hostname || 'localhost',  // WebSocket server host
-        port: '3000',                                    // WebSocket server port
-        // protocol: 'ws:' or 'wss:'                    // Optional: override protocol
+        host: '35.175.183.90',  // WebSocket server host
+        port: '3000',            // WebSocket server port
+        // protocol: 'ws:',      // Optional: override protocol (ws: or wss:)
     }
 };
 ```
 
 By default, the client will:
-- Use the same hostname as the page (falls back to `localhost`)
+- Connect to the configured host (currently set to `35.175.183.90`)
 - Connect to port `3000`
 - Automatically select `ws:` or `wss:` based on the page protocol (http/https)
+- You can override the protocol by uncommenting and setting the `protocol` field
 
-To change the configuration for different environments, simply edit the values in `config.js`.
+To change the configuration for different environments (local development, staging, production), simply edit the values in `client/scripts/config.js`.

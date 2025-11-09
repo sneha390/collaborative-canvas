@@ -4,6 +4,7 @@
 import * as DrawingStore from '../../scripts/drawing_store.js';
 import * as WebSocketManager from '../../scripts/services/websocket_manager.js';
 import { getCanvasContext } from './tools_controller.js';
+import { getWebSocketUrl } from '../../scripts/config.js';
 
 // ********************************* STATE VARIABLES *********************************
 let userId = null;
@@ -77,11 +78,8 @@ const setupPresenceHeartbeat = () => {
 
 // ********************************* WEBSOCKET CONNECTION *********************************
 const connectToServer = () => {
-    // Determine WebSocket server URL
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = "35.175.183.90";
-    const port = '3000';
-    const wsUrl = `${protocol}//${host}:${port}`;
+    // Get WebSocket server URL from config
+    const wsUrl = getWebSocketUrl();
     
     console.log(`Connecting to: ${wsUrl}`);
     updateSyncStatus('connecting');
