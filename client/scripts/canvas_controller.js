@@ -7,6 +7,9 @@ import {
     getCanvasContext 
 } from './tools_controller.js';
 
+import * as DrawingStore from './drawing_store.js';
+import { broadcastStroke } from './sync_controller.js';
+
 // ********************************* CANVAS ELEMENTS *********************************
 const CANVAS = getCanvas();
 const CTX = getCanvasContext();
@@ -67,17 +70,41 @@ const startDrawing = (x, y) => {
     isDrawing = true;
     lastX = x;
     lastY = y;
+    
+    // Start new stroke in drawing store
+    const userData = window.userData || { name: 'Unknown', color: '#000000' };
+    DrawingStore.startStroke(
+        userData.userId || 'local',
+        userData.name,
+        getCurrentColor(),
+        getCurrentStrokeWidth(),
+        isEraserActive()
+    );
 };
 
 const draw = (x, y) => {
     if (!isDrawing) return;
+    
+    // Draw line on canvas
     drawLine(lastX, lastY, x, y);
+    
+    // Add point to current stroke
+    DrawingStore.addPointToStroke(x, y);
+    
     lastX = x;
     lastY = y;
 };
 
 const stopDrawing = () => {
+    if (!isDrawing) return;
+    
     isDrawing = false;
+    
+    // End stroke and broadcast to other users
+    const completedStroke = DrawingStore.endStroke();
+    if (completedStroke) {
+        broadcastStroke(completedStroke);
+    }
 };
 
 // ********************************* MOUSE EVENT HANDLERS *********************************

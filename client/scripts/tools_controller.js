@@ -29,6 +29,22 @@ const ACTIVE_USERS_CONTAINER = document.getElementById('active-users-container')
 // STATE VARIABLES
 let currentStrokeWidth = 5;
 
+// ********************************* IMPORTS *********************************
+let broadcastClearCanvas = null;
+let clearDrawingStoreActions = null;
+
+// Dynamically import modules to avoid circular dependencies
+setTimeout(() => {
+    import('./sync_controller.js').then(module => {
+        broadcastClearCanvas = module.broadcastClearCanvas;
+        console.log('✅ Sync controller imported in tools_controller');
+    });
+    import('./drawing_store.js').then(module => {
+        clearDrawingStoreActions = module.clearActions;
+        console.log('✅ Drawing store imported in tools_controller');
+    });
+}, 100);
+
 // ********************************* EVENT DISPATCHER *********************************
 // Dispatch custom event when controller state changes
 const dispatchControllerChanged = (changeType, value) => {
@@ -112,8 +128,21 @@ if (defaultPreset) {
 
 // ********************************* CLEAR CANVAS FUNCTIONALITY *********************************
 const clearCanvas = () => {
-    CANVAS.getContext('2d').clearRect(0, 0, CANVAS.width, CANVAS.height);
-}
+    const ctx = CANVAS.getContext('2d');
+    ctx.clearRect(0, 0, CANVAS.width, CANVAS.height);
+    
+    // Clear local drawing store
+    if (clearDrawingStoreActions) {
+        clearDrawingStoreActions();
+    }
+    
+    // Broadcast clear action to other users
+    if (broadcastClearCanvas) {
+        broadcastClearCanvas();
+    }
+    
+    console.log('🗑️  Canvas cleared locally');
+};
 
 CLEAR_CANVAS_BUTTON.addEventListener('click', clearCanvas);
 
