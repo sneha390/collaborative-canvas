@@ -524,23 +524,221 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .header {
+        padding: 12px 16px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .icon {
+        font-size: 20px;
+    }
+
+    .online-users {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
     .container {
         flex-direction: column;
+        padding: 0;
+        height: calc(100vh - 49px);
+        gap: 0;
     }
     
     .toolbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
         width: 100%;
+        height: auto;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border: none;
+        border-top: 1px solid #e5e7eb;
+        border-radius: 20px 20px 0 0;
+        padding: 0 16px calc(env(safe-area-inset-bottom) + 12px);
+        z-index: 1000;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        max-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Drag handle indicator */
+    .toolbar::before {
+        content: '';
+        display: block;
+        width: 40px;
+        height: 4px;
+        background: #d1d5db;
+        border-radius: 2px;
+        margin: 8px auto 8px;
+        flex-shrink: 0;
+    }
+
+    .toolbar::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .toolbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .toolbar::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 2px;
+    }
+
+    .toolbar-section {
+        margin-bottom: 0;
+    }
+
+    .section-title {
+        font-size: 11px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Tool Pills */
+    .tool-group {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .tool-btn {
+        flex: 1;
+        padding: 12px 8px;
+        border-radius: 20px;
+        font-size: 13px;
+        text-align: center;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .tool-btn.active {
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Color Picker Pills */
+    .color-picker-container {
+        gap: 10px;
+    }
+
+    .color-input {
+        height: 48px;
+        border-radius: 12px;
+    }
+
+    .color-presets {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+    }
+
+    .color-preset {
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .current-color {
+        padding: 8px 12px;
+        border-radius: 12px;
+    }
+
+    /* Stroke Width */
+    .slider-container {
+        gap: 8px;
+    }
+
+    .slider {
+        height: 6px;
+    }
+
+    .slider::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+    }
+
+    .slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+    }
+
+    .slider-value {
+        font-size: 13px;
+    }
+
+    .stroke-preview {
+        padding: 12px;
+    }
+
+    /* Action Pills */
+    .action-group {
+        gap: 6px;
+    }
+
+    .action-btn {
+        padding: 12px 8px;
+        font-size: 13px;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .action-btn:hover {
+        transform: none;
+    }
+
+    .action-btn:active {
+        transform: scale(0.95);
+    }
+
+    #clear-canvas-button {
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
     .canvas-container {
-        min-height: 400px;
+        flex: 1;
+        border-radius: 0;
+        border: none;
+        height: 100%;
+        margin-bottom: 0;
+    }
+
+    #canvas {
+        touch-action: none;
     }
     
     .active-users {
         flex-direction: row;
         flex-wrap: wrap;
+        top: 10px;
+        right: 10px;
     }
 
+    .user-indicator {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+
+    .canvas-info {
+        display: none; /* Hide on mobile to avoid clutter with floating toolbar */
+    }
+
+    .info-item {
+        padding: 6px 10px;
+        font-size: 11px;
+        border-radius: 12px;
+    }
+
+    /* Landing Page Mobile */
     .welcome-card {
         padding: 30px 24px;
     }
@@ -557,5 +755,30 @@ body {
     .feature-item {
         flex-direction: row;
         justify-content: center;
+    }
+}
+
+/* Extra small screens - compact pills */
+@media (max-width: 480px) {
+    .toolbar {
+        padding: 10px 12px 16px;
+    }
+
+    .tool-btn {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    .color-presets {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .action-btn {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    .section-title {
+        font-size: 10px;
     }
 }
