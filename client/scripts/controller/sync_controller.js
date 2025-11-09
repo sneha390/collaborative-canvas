@@ -79,7 +79,7 @@ const setupPresenceHeartbeat = () => {
 const connectToServer = () => {
     // Determine WebSocket server URL
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = "localhost";
+    const host = "35.175.183.90";
     const port = '3000';
     const wsUrl = `${protocol}//${host}:${port}`;
     
