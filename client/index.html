@@ -25,8 +25,8 @@
             <div class="toolbar-section">
                 <h3 class="section-title">Tools</h3>
                 <div class="tool-group">
-                    <button class="tool-btn active" data-tool="brush">🖌️ Brush</button>
-                    <button class="tool-btn" data-tool="eraser">🧹 Eraser</button>
+                    <button id="brush-tool" class="tool-btn active" data-tool="brush">🖌️ Brush</button>
+                    <button id="eraser-tool" class="tool-btn" data-tool="eraser">🧹 Eraser</button>
                 </div>
             </div>
 
@@ -36,14 +36,15 @@
                 <div class="color-picker-container">
                     <input type="color" id="colorPicker" class="color-input" value="#6366f1">
                     <div class="color-presets">
-                        <button class="color-preset" data-color="#000000" style="background-color: #000000"></button>
+                        <button id="color-preset-0" data-id="0" class="color-preset" data-color="#000000" style="background-color: #000000"></button>
+                        <button id="color-preset-1" data-id="1" class="color-preset" data-color="#ef4444" style="background-color: #ef4444"></button>
+                        <button id="color-preset-2" data-id="2" class="color-preset" data-color="#f59e0b" style="background-color: #f59e0b"></button>
+                        <button id="color-preset-3" data-id="3" class="color-preset" data-color="#10b981" style="background-color: #10b981"></button>
+                        <button id="color-preset-4" data-id="4" class="color-preset" data-color="#3b82f6" style="background-color: #3b82f6"></button>
+                        <button id="color-preset-5" data-id="5" class="color-preset" data-color="#6366f1" style="background-color: #6366f1"></button>
+                        <button id="color-preset-6" data-id="6" class="color-preset" data-color="#8b5cf6" style="background-color: #8b5cf6"></button>
+                        <button id="color-preset-7" data-id="7" class="color-preset" data-color="#ec4899" style="background-color: #ec4899"></button>
                         <button class="color-preset" data-color="#ef4444" style="background-color: #ef4444"></button>
-                        <button class="color-preset" data-color="#f59e0b" style="background-color: #f59e0b"></button>
-                        <button class="color-preset" data-color="#10b981" style="background-color: #10b981"></button>
-                        <button class="color-preset" data-color="#3b82f6" style="background-color: #3b82f6"></button>
-                        <button class="color-preset" data-color="#6366f1" style="background-color: #6366f1"></button>
-                        <button class="color-preset" data-color="#8b5cf6" style="background-color: #8b5cf6"></button>
-                        <button class="color-preset" data-color="#ec4899" style="background-color: #ec4899"></button>
                     </div>
                     <div class="current-color">
                         <div class="color-display" id="currentColor" style="background-color: #6366f1"></div>
@@ -69,7 +70,7 @@
 
             <div class="toolbar-section">
                 <h3 class="section-title">Actions</h3>
-                <button class="action-btn clear-btn">🗑️ Clear Canvas</button>
+                <button id="clear-canvas-button" class="action-btn">🗑️ Clear Canvas</button>
             </div>
         </aside>
 
@@ -77,7 +78,7 @@
         <main class="canvas-container">
             <canvas id="canvas"></canvas>
             
-            <div class="active-users">
+            <div id="active-users-container" class="active-users">
                 <div class="user-indicator" style="background-color: #ef4444;">
                     Alice 🖱️
                 </div>
@@ -90,11 +91,11 @@
             </div>
 
             <div class="canvas-info">
-                <div class="info-item">⚡ Real-time sync enabled</div>
+                <div id="real-time-sync-status" class="info-item">⚡ Real-time sync enabled</div>
             </div>
         </main>
     </div>
 
-    <script type="module" src="scripts/canvas.js"></script>
+    <script type="module" src="scripts/index.js"></script>
 </body>
 </html>
