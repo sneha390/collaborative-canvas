@@ -1,4 +1,5 @@
 # collaborative-canvas
+[DEMO LINK](http://35.175.183.90:8080)
 
 ## How to Run
 
@@ -39,3 +40,5 @@ By default, the client will:
 - You can override the protocol by uncommenting and setting the `protocol` field
 
 To change the configuration for different environments (local development, staging, production), simply edit the values in `client/scripts/config.js`.
+
+
